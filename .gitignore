@@ -1,0 +1,15 @@
+# Material temporal de extracción y revisión
+tmp/
+
+# El alcance publicado usa únicamente las figuras de las unidades 5 a 8
+assets/book/*
+!assets/book/parte1-p067-escalas-basicas.png
+!assets/book/parte2-p022-proceso-campo.png
+!assets/book/qr/
+!assets/book/qr/*.png
+
+# Archivos locales del sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.claude/

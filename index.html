@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Parte 2 de la experiencia pedagógica basada en el libro Inteligencia en la Investigación de Mercados Efectiva: medición, cuestionario, muestra y trabajo de campo.">
+  <title>Investigación de Mercados Efectiva · Parte 2</title>
+  <link rel="icon" href="assets/logo-mercados.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="src/styles.css?v=p2-1">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.111.0/dist/umd/supabase.min.js"></script>
+  <script src="vendor/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#loginView">Saltar al contenido principal</a>
+  <div class="page-texture" aria-hidden="true"></div>
+
+  <main id="loginView" class="view is-active auth-page" tabindex="-1">
+    <section class="auth-story" aria-labelledby="brandTitle">
+      <div class="brand-lockup">
+        <img src="assets/logo-mercados.svg" alt="">
+        <span>Experiencia académica interactiva</span>
+      </div>
+      <div class="auth-copy">
+        <p class="eyebrow">De la medición al trabajo de campo</p>
+        <h1 id="brandTitle">Investigación de Mercados Efectiva</h1>
+        <p class="auth-subtitle">Una visión desde la gestión del conocimiento y las TIC</p>
+        <p>Construye un proyecto de investigación paso a paso con una ruta clara, visual e interactiva.</p>
+      </div>
+      <div class="auth-pill-row" aria-label="Ejes del recorrido">
+        <span>Proyecto aplicado</span>
+          <span>Unidades 5 a 8</span>
+        <span>Decisiones con evidencia</span>
+      </div>
+    </section>
+
+    <section class="auth-card" aria-labelledby="authTitle">
+      <div class="auth-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5V5.4c0-.8.6-1.4 1.4-1.4H19v14H5.5A1.5 1.5 0 0 0 4 19.5Zm0 0A1.5 1.5 0 0 0 5.5 21H20V7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <p class="eyebrow">Acceso al recorrido</p>
+      <h2 id="authTitle">Iniciar sesión</h2>
+      <p id="authSubtitle" class="muted">Ingresa tus credenciales para continuar.</p>
+      <div id="authMessage" class="form-message" role="status" aria-live="polite"></div>
+      <form id="authForm" class="auth-form">
+        <div id="nameField" class="field is-hidden">
+          <label for="nameInput">Nombre completo</label>
+          <input id="nameInput" name="name" type="text" autocomplete="name" placeholder="Ej. Laura Pérez">
+        </div>
+        <div class="field">
+          <label for="emailInput">Correo electrónico</label>
+          <input id="emailInput" name="email" type="email" autocomplete="email" placeholder="estudiante@uptc.edu.co" required>
+        </div>
+        <div class="field">
+          <label for="passwordInput">Contraseña</label>
+          <div class="password-field">
+            <input id="passwordInput" name="password" type="password" minlength="6" autocomplete="current-password" placeholder="Mínimo 6 caracteres" required>
+            <button id="togglePassword" class="password-toggle" type="button" aria-label="Mostrar contraseña">Mostrar</button>
+          </div>
+        </div>
+        <button id="authSubmit" class="button button-primary button-block" type="submit">Ingresar</button>
+      </form>
+      <button id="authModeToggle" class="text-button" type="button">¿No tienes cuenta? Regístrate aquí</button>
+      <p class="auth-note">Tu avance se guarda de forma individual en tu cuenta.</p>
+    </section>
+  </main>
+
+  <header id="appHeader" class="app-header" hidden>
+    <a id="homeLink" class="app-brand" href="#recorrido" aria-label="Ir al recorrido">
+      <img src="assets/logo-mercados.svg" alt="">
+      <span><strong>Investigación de Mercados Efectiva</strong><small>Parte 2 · Unidades 5 a 8</small></span>
+    </a>
+    <nav class="header-nav" aria-label="Navegación principal">
+      <button class="nav-button is-active" type="button" data-view-target="homeView">Mi recorrido</button>
+      <button class="nav-button" type="button" data-view-target="mediaView">Recursos del libro</button>
+      <button class="nav-button nav-button-featured" type="button" data-view-target="simulatorView">Simulador</button>
+      <button class="nav-button" type="button" data-view-target="sourcesView">Fuentes</button>
+      <button class="nav-button" type="button" data-view-target="creditsView">Créditos</button>
+      <button class="nav-button" type="button" data-view-target="profileView">Mi perfil</button>
+      <button id="logoutButton" class="nav-button nav-button-quiet" type="button">Cerrar sesión</button>
+    </nav>
+  </header>
+
+  <main id="homeView" class="view app-main" tabindex="-1">
+    <section class="welcome-grid">
+      <article class="welcome-card">
+        <p class="eyebrow">Tu ruta personal de aprendizaje</p>
+        <h1 id="welcomeTitle">Hola. Tu investigación comienza aquí.</h1>
+        <p>Avanza por las fases del proceso y construye una evidencia de proyecto en cada unidad.</p>
+        <div class="progress-copy"><span>Progreso del recorrido</span><strong id="overallProgressText">0%</strong></div>
+        <div class="progress-track" role="progressbar" aria-label="Progreso general" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="overallProgressBar"></span></div>
+        <p id="overallProgressCaption" class="muted">Tu primera estación está lista.</p>
+      </article>
+      <aside class="source-promise">
+        <span class="source-icon" aria-hidden="true">⌁</span>
+        <p class="eyebrow">Compromiso de contenido</p>
+        <h2>Contenido académico sustentado</h2>
+        <p>Los conceptos respetan el material base y los recursos entregados para esta experiencia.</p>
+        <button class="text-button align-left" type="button" data-view-target="sourcesView">Ver las fuentes utilizadas →</button>
+      </aside>
+    </section>
+
+    <section id="avatarSection" class="avatar-panel" aria-labelledby="avatarTitle">
+      <div class="section-heading">
+        <div><p class="eyebrow">Tu acompañante</p><h2 id="avatarTitle">Elige un avatar para comenzar</h2><p>Te acompañará en el recorrido, celebrará tus insignias y aparecerá en el apoyo de cada unidad.</p></div>
+        <span class="section-symbol" aria-hidden="true">☺</span>
+      </div>
+      <div id="avatarGrid" class="avatar-grid"></div>
+      <p id="avatarStatus" class="avatar-status" role="status">Selecciona el avatar con el que más te identifiques.</p>
+    </section>
+
+    <section class="journey-intro" aria-labelledby="journeyIntroTitle">
+      <p class="eyebrow centered">Cómo se trabaja</p>
+      <h2 id="journeyIntroTitle">Primero comprende el recorrido</h2>
+      <p class="journey-lead">En cada unidad comienzas con una decisión del proyecto; después estudias la teoría necesaria, practicas y compruebas lo aprendido.</p>
+      <div class="journey-steps">
+        <article><span class="journey-icon" aria-hidden="true">⌂</span><h3>Construye</h3><p>Resuelve una parte concreta del proyecto de investigación.</p></article>
+        <article><span class="journey-icon" aria-hidden="true">▤</span><h3>Comprende</h3><p>Explora conceptos y profundiza con recursos educativos.</p></article>
+        <article><span class="journey-icon" aria-hidden="true">✓</span><h3>Comprueba</h3><p>Practica y evalúa tu comprensión; todas las unidades permanecen disponibles.</p></article>
+      </div>
+    </section>
+
+    <section id="recorrido" class="route-panel" aria-labelledby="routeTitle">
+      <div class="section-heading">
+        <div><p class="eyebrow">Ruta académica</p><h2 id="routeTitle">De la medición al trabajo de campo</h2></div>
+        <button id="continueButton" class="button button-primary" type="button">Comenzar Unidad 5</button>
+      </div>
+      <div id="unitMap" class="unit-map"></div>
+    </section>
+
+    <section id="finalChallenge" class="final-challenge">
+      <div><p class="eyebrow">Cierre integrador</p><h2>Evaluación final del recorrido</h2><p>Disponible desde el inicio para que ningún error en las actividades detenga tu avance.</p></div>
+      <button id="finalEvaluationButton" class="button button-primary" type="button">Iniciar evaluación final</button>
+    </section>
+
+    <section class="simulator-invitation" aria-labelledby="simulatorInviteTitle">
+      <div class="simulator-invitation-icon" aria-hidden="true">◎</div>
+      <div><p class="eyebrow">Práctica integradora</p><h2 id="simulatorInviteTitle">Experimenta con el simulador guiado</h2><p>Toma ocho decisiones sobre la escala, el cuestionario, la muestra y el trabajo de campo, administra tiempo y recursos y cambia la ruta para comparar coherencia, viabilidad y calidad.</p></div>
+      <button class="button button-primary" type="button" data-view-target="simulatorView">Abrir simulador</button>
+    </section>
+  </main>
+
+  <main id="unitView" class="view app-main unit-page" tabindex="-1">
+    <button id="backToRoute" class="back-button" type="button">← Volver a mi recorrido</button>
+    <section class="unit-hero">
+      <div>
+        <p id="unitPhase" class="eyebrow">Fase</p>
+        <h1 id="unitTitle">Unidad</h1>
+        <p id="unitDescription"></p>
+        <div class="progress-copy"><span>Progreso de la unidad</span><strong id="unitProgressText">0%</strong></div>
+        <div class="progress-track" role="progressbar" aria-label="Progreso de la unidad" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="unitProgressBar"></span></div>
+      </div>
+      <aside class="unit-source-card"><span aria-hidden="true">▤</span><strong id="unitSourceName">Material base</strong><small id="unitSourcePages">Páginas</small></aside>
+    </section>
+    <nav id="stageTrack" class="stage-track" aria-label="Etapas de la unidad"></nav>
+
+    <section id="projectSection" class="learning-section project-section">
+      <div class="section-heading compact"><div><p class="eyebrow">Punto de partida</p><h2>Proyecto aplicado</h2><p>Usa esta misión para saber qué necesitas comprender en la teoría.</p></div><span class="section-symbol" aria-hidden="true">⌂</span></div>
+      <article id="projectBrief" class="project-brief"></article>
+    </section>
+
+    <section id="theorySection" class="learning-section">
+      <div class="section-heading compact"><div><p class="eyebrow">Base conceptual</p><h2>Explora la teoría</h2><p>Abre las tarjetas y revisa los conceptos antes de continuar.</p></div><span class="section-symbol" aria-hidden="true">▤</span></div>
+      <div id="theoryGrid" class="theory-grid"></div>
+      <figure id="bookFigure" class="book-figure" hidden>
+        <img id="bookFigureImage" src="" alt="">
+        <figcaption id="bookFigureCaption"></figcaption>
+      </figure>
+    </section>
+
+    <section id="resourcesSection" class="learning-section resources-section" hidden>
+      <div class="section-heading compact"><div><p class="eyebrow">Recursos educativos</p><h2>Amplía lo aprendido</h2><p>Explora los recursos de la unidad antes de pasar a las actividades.</p></div><span class="section-symbol" aria-hidden="true">▶</span></div>
+      <div id="resourcesGrid" class="resources-grid"></div>
+    </section>
+
+    <section id="practiceSection" class="learning-section practice-section">
+      <div class="section-heading compact"><div><p class="eyebrow">Laboratorio de práctica</p><h2>Dos actividades diferentes</h2><p>Cada unidad propone retos propios basados en los conceptos que acabas de estudiar.</p></div><span class="section-symbol" aria-hidden="true">✦</span></div>
+      <div id="practiceContainer"></div>
+    </section>
+
+    <section id="evaluationSection" class="learning-section evaluation-section">
+      <div class="section-heading compact"><div><p class="eyebrow">Verificación de aprendizaje</p><h2>Evaluación de la unidad</h2><p>Las cinco preguntas se presentan en una ventana, una por una.</p></div><span class="section-symbol" aria-hidden="true">✓</span></div>
+      <div id="evaluationContainer"></div>
+    </section>
+  </main>
+
+  <main id="mediaView" class="view app-main" tabindex="-1">
+    <button class="back-button" type="button" data-view-target="homeView">← Volver al recorrido</button>
+    <section class="page-heading media-heading">
+      <div>
+        <p class="eyebrow">Recursos originales del libro</p>
+        <h1>Biblioteca multimedia y códigos QR</h1>
+        <p>Reproduce cada material dentro de la aplicación o escanea su código con otro dispositivo. Los cinco destinos corresponden a los QR de las unidades 5 a 8.</p>
+      </div>
+      <span class="media-heading-mark" aria-hidden="true">▦</span>
+    </section>
+    <div id="bookMediaGrid" class="book-media-grid"></div>
+  </main>
+
+  <main id="simulatorView" class="view app-main simulator-page" tabindex="-1">
+    <button class="back-button" type="button" data-view-target="homeView">← Volver al recorrido</button>
+    <section class="simulator-hero">
+      <div>
+        <p class="eyebrow">Simulador integrador · Disponible</p>
+        <h1>Toma decisiones y observa cómo cambia tu investigación</h1>
+        <p>Trabaja con un caso, prueba combinaciones y recibe un resultado inmediato. Es sencillo de usar, pero cada elección modifica la ruta.</p>
+      </div>
+      <div class="simulator-status"><span aria-hidden="true">◎</span><strong>8 decisiones</strong><small>Con recursos, tiempo y finales distintos</small></div>
+    </section>
+    <div class="simulator-layout">
+      <section class="simulator-workspace" aria-labelledby="simulatorStepTitle">
+        <div id="simulatorTrack" class="simulator-track" aria-label="Pasos del simulador"></div>
+        <div id="simulatorContent" class="simulator-content"></div>
+      </section>
+      <aside class="simulator-guide" aria-labelledby="simulatorGuideTitle">
+        <div id="simulatorGuideAvatar" class="simulator-guide-avatar" aria-hidden="true"></div>
+        <p class="eyebrow">Asistente de voz</p>
+        <h2 id="simulatorGuideTitle">Te explico cada paso</h2>
+        <p id="simulatorGuideText">Escucha una orientación breve antes de elegir.</p>
+        <div class="simulator-voice-actions">
+          <button id="speakSimulatorGuide" class="button button-primary" type="button">🔊 Escuchar guía</button>
+          <button id="stopSimulatorGuide" class="button button-secondary" type="button">Detener</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <main id="sourcesView" class="view app-main" tabindex="-1">
+    <button class="back-button" type="button" data-view-target="homeView">← Volver al recorrido</button>
+    <section class="page-heading centered-heading">
+      <p class="eyebrow">Trazabilidad académica</p>
+      <h1>Fuentes del contenido</h1>
+      <p>Aquí puedes consultar los materiales académicos y educativos utilizados en las unidades 5 a 8.</p>
+    </section>
+    <div class="source-file-grid">
+      <article class="source-file-card"><span class="source-file-icon" aria-hidden="true">PDF</span><div><h2>Libro PARTE1.docx.pdf</h2><p>Unidad 5: medición y escalamiento.</p><small>Páginas 64 a 70 del PDF · archivo entregado por el usuario</small><p class="source-file-download"><a id="downloadSourcePdf" class="button button-secondary" href="assets/libro-parte1.pdf" download>Descargar la Parte 1 (PDF) ↓</a></p></div></article>
+      <article class="source-file-card"><span class="source-file-icon" aria-hidden="true">PDF</span><div><h2>Libro PARTE2.docx.pdf</h2><p>Unidades 6 a 8: cuestionario, muestra y trabajo de campo.</p><small>Páginas 2 a 27 del PDF · archivo entregado por el usuario</small><p class="source-file-download"><a id="downloadSourcePdf2" class="button button-secondary" href="assets/libro-parte2.pdf" download>Descargar la Parte 2 (PDF) ↓</a></p></div></article>
+      <article class="source-file-card"><span class="source-file-icon resource-source-icon" aria-hidden="true">QR</span><div><h2>Recursos multimedia del libro</h2><p>Cuatro videos y un podcast enlazados desde los códigos QR de las unidades 5 a 8.</p><small>Página 65 de la Parte 1; páginas 2, 8, 11 y 19 de la Parte 2 · destinos originales del libro</small></div></article>
+      <article class="source-file-card"><span class="source-file-icon resource-source-icon" aria-hidden="true">MP4</span><div><h2>Videos, diapositivas e infografías</h2><p>Recursos elaborados para las unidades 5 a 8 a partir del contenido de las páginas indicadas del libro.</p><small>Producción propia del proyecto · sin fuentes externas</small></div></article>
+    </div>
+    <section class="source-method"><h2>Uso de los materiales</h2><p>Las lecturas construyen la base conceptual; los recursos entregados y los destinos originales de los códigos QR amplían la experiencia de las unidades 5 a 8.</p></section>
+  </main>
+
+  <main id="profileView" class="view app-main" tabindex="-1">
+    <button class="back-button" type="button" data-view-target="homeView">← Volver al recorrido</button>
+    <section class="profile-layout">
+      <aside class="profile-card">
+        <div class="profile-avatar-wrap">
+          <div id="profileInitials" class="profile-avatar">IM</div>
+          <button id="profilePhotoButton" class="profile-photo-button" type="button">Cambiar foto</button>
+          <input id="profilePhotoInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+        </div>
+        <h1 id="profileName">Estudiante</h1>
+        <p id="profileEmail" class="muted">correo@ejemplo.com</p>
+        <p>Programa de autoformación guiada</p>
+        <button id="editProfileButton" class="text-button" type="button">Corregir mi nombre</button>
+        <form id="profileEditForm" class="profile-edit-form is-hidden">
+          <div class="field">
+            <label for="profileNameInput">Nombre completo</label>
+            <input id="profileNameInput" name="profileName" type="text" autocomplete="name" maxlength="80" placeholder="Ej. Laura Pérez">
+          </div>
+          <div class="profile-edit-actions">
+            <button id="saveProfileName" class="button button-primary" type="submit">Guardar nombre</button>
+            <button id="cancelProfileEdit" class="button button-secondary" type="button">Cancelar</button>
+          </div>
+          <p id="profileEditMessage" class="form-message" role="status" aria-live="polite"></p>
+        </form>
+      </aside>
+      <section class="profile-progress-card">
+        <p class="eyebrow">Progreso académico</p>
+        <h2>Mi recorrido</h2>
+        <div id="profileStats" class="profile-stats"></div>
+        <section class="badge-shelf"><div class="badge-shelf-heading"><p class="eyebrow">Logros obtenidos</p><h3>Mis insignias</h3></div><div id="badgeGrid" class="badge-grid"></div></section>
+        <div id="certificateArea" class="certificate-area"></div>
+      </section>
+    </section>
+  </main>
+
+  <main id="creditsView" class="view app-main" tabindex="-1">
+    <button class="back-button" type="button" data-view-target="homeView">← Volver al recorrido</button>
+    <section class="page-heading centered-heading">
+      <p class="eyebrow">Reconocimientos</p>
+      <h1>Créditos</h1>
+      <p id="creditsIntro">Esta experiencia de aprendizaje fue orientada y dirigida por los docentes de la Universidad Pedagógica y Tecnológica de Colombia que se relacionan a continuación.</p>
+    </section>
+    <div id="creditsGrid" class="credits-people"></div>
+    <section class="credits-note">
+      <p id="creditsNote">Proyecto académico con fines exclusivamente educativos, desarrollado como parte del curso a solicitud de sus docentes.</p>
+    </section>
+  </main>
+
+  <div id="theoryModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="theoryModalTitle" aria-hidden="true">
+    <button class="modal-overlay" type="button" data-close-modal aria-label="Cerrar"></button>
+    <article class="modal-panel">
+      <header class="modal-header"><div><p class="eyebrow">Base conceptual</p><h2 id="theoryModalTitle">Tema</h2></div><button class="modal-close" type="button" data-close-modal aria-label="Cerrar">×</button></header>
+      <div id="theoryModalBody" class="modal-body"></div>
+      <footer id="theoryModalSource" class="modal-source"></footer>
+    </article>
+  </div>
+
+  <div id="resourceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="resourceModalTitle" aria-hidden="true">
+    <button class="modal-overlay" type="button" data-close-resource aria-label="Cerrar"></button>
+    <article class="modal-panel modal-panel-wide resource-modal-panel">
+      <header class="modal-header"><div><p class="eyebrow">Recurso educativo</p><h2 id="resourceModalTitle">Recurso</h2></div><button class="modal-close" type="button" data-close-resource aria-label="Cerrar">×</button></header>
+      <div id="resourceModalBody" class="resource-modal-body"></div>
+      <footer id="resourceModalSource" class="modal-source"></footer>
+    </article>
+  </div>
+
+  <div id="quizModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="quizModalTitle" aria-hidden="true">
+    <button class="modal-overlay" type="button" data-close-quiz aria-label="Cerrar"></button>
+    <article class="modal-panel quiz-modal-panel">
+      <header class="modal-header"><div><p class="eyebrow">Evaluación de la unidad</p><h2 id="quizModalTitle">Comprueba lo aprendido</h2></div><button class="modal-close" type="button" data-close-quiz aria-label="Cerrar">×</button></header>
+      <div id="quizModalBody" class="quiz-modal-body"></div>
+    </article>
+  </div>
+
+  <div id="badgeModal" class="modal badge-modal" role="dialog" aria-modal="true" aria-labelledby="badgeModalTitle" aria-hidden="true">
+    <button class="modal-overlay" type="button" data-close-badge aria-label="Cerrar"></button>
+    <article class="modal-panel badge-celebration">
+      <div id="badgeCelebrationIcon" class="badge-celebration-icon">✦</div>
+      <p class="eyebrow">Nueva insignia</p>
+      <h2 id="badgeModalTitle">Logro desbloqueado</h2>
+      <p id="badgeModalDescription"></p>
+      <button class="button button-primary" type="button" data-close-badge>Continuar recorrido</button>
+    </article>
+  </div>
+
+  <div id="finalModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="finalModalTitle" aria-hidden="true">
+    <button class="modal-overlay" type="button" data-close-final aria-label="Cerrar"></button>
+    <article class="modal-panel modal-panel-wide">
+      <header class="modal-header"><div><p class="eyebrow">Cierre integrador</p><h2 id="finalModalTitle">Evaluación final</h2></div><button class="modal-close" type="button" data-close-final aria-label="Cerrar">×</button></header>
+      <div id="finalModalBody" class="modal-body"></div>
+    </article>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer id="siteFooter" class="site-footer" hidden>
+    <div class="site-footer-inner">
+      <div class="site-footer-brand">
+        <img src="assets/logo-mercados.svg" alt="">
+        <div>
+          <strong>Investigación de Mercados Efectiva</strong>
+          <span>Parte 2 · De la medición al trabajo de campo</span>
+        </div>
+      </div>
+      <nav class="site-footer-nav" aria-label="Enlaces del pie de página">
+        <button type="button" data-view-target="homeView">Mi recorrido</button>
+        <button type="button" data-view-target="mediaView">Recursos del libro</button>
+        <button type="button" data-view-target="sourcesView">Fuentes</button>
+      </nav>
+      <div class="site-footer-logos" aria-label="Instituciones">
+        <img src="assets/logos/uptc.png?v=2" alt="Universidad Pedagógica y Tecnológica de Colombia" onerror="this.style.display='none'">
+        <img src="assets/logos/facultad-chiquinquira.png?v=2" alt="Facultad Seccional Chiquinquirá" onerror="this.style.display='none'">
+        <img src="assets/logos/eae-chiquinquira.png?v=2" alt="Escuela de Administración de Empresas — Chiquinquirá" onerror="this.style.display='none'">
+      </div>
+      <p class="site-footer-legal">
+        © <span id="footerYear">2026</span> · Proyecto académico con fines educativos, desarrollado para el módulo del curso.
+        Contenido basado en los materiales entregados.
+        <br>Este recurso complementa, pero no sustituye, la asesoría docente ni una certificación institucional.
+      </p>
+    </div>
+  </footer>
+
+  <aside id="supportWidget" class="support-widget" hidden>
+    <p id="motivationBubble" class="motivation-bubble" aria-live="polite"></p>
+    <section id="supportPanel" class="support-panel" aria-labelledby="supportTitle" hidden>
+      <header class="support-header"><div id="supportAvatar" class="support-avatar"></div><div><p class="eyebrow">Apoyo de la unidad</p><h2 id="supportTitle">¿En qué paso estás?</h2></div><button id="closeSupport" class="support-close" type="button" aria-label="Cerrar apoyo">×</button></header>
+      <div id="supportConversation" class="support-conversation"><p>Elige una pregunta y te orientaré sin salir de la unidad.</p></div>
+      <div id="supportQuestions" class="support-questions"></div>
+      <button id="speakSupportAnswer" class="voice-button" type="button" hidden>🔊 Escuchar respuesta</button>
+    </section>
+    <button id="supportToggle" class="support-toggle" type="button" aria-label="Abrir apoyo de la unidad"><img src="assets/logo-mercados.svg" alt=""><span>Ayuda</span></button>
+  </aside>
+  <script src="src/course-data-four.js?v=p2-1"></script>
+  <script src="src/main.js?v=p2-3"></script>
+</body>
+</html>

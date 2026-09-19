@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title desc">
+  <title id="title">Investigación de Mercados Efectiva</title>
+  <desc id="desc">Una brújula académica con una gráfica ascendente.</desc>
+  <defs>
+    <linearGradient id="g" x1="12" y1="12" x2="108" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e55191"/>
+      <stop offset="1" stop-color="#52c8bc"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="108" height="108" rx="30" fill="#121744"/>
+  <circle cx="60" cy="60" r="37" fill="#e9eaf2" stroke="url(#g)" stroke-width="6"/>
+  <path d="M48 76V59h9v17H48Zm15 0V48h9v28h-9Zm15 0V37h9v39h-9Z" fill="#121744"/>
+  <path d="m35 68 15-17 12 8 21-24" fill="none" stroke="#e55191" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+  <path d="m75 35 10-2-2 10" fill="none" stroke="#e55191" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+</svg>

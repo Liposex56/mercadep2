@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t d">
+  <title id="t">Brisa</title>
+  <desc id="d">Personaje con cabello largo ondulado y una flor, con hojas de selva al fondo (región Pacífica).</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d6d0ff"/>
+      <stop offset="1" stop-color="#f3f0ff"/>
+    </linearGradient>
+    <clipPath id="c"><circle cx="100" cy="100" r="100"/></clipPath>
+  </defs>
+  <g clip-path="url(#c)">
+    <rect width="200" height="200" fill="url(#bg)"/>
+    <!-- hojas de selva -->
+    <g fill="#5fd0b8">
+      <path d="M-6 96 C10 70 40 66 58 84 C40 100 14 108 -6 96 Z"/>
+      <path d="M206 100 C190 72 160 68 142 88 C160 104 186 112 206 100 Z"/>
+    </g>
+    <g fill="#2fae98">
+      <path d="M-10 132 C8 112 32 110 46 122 C30 140 8 146 -10 132 Z"/>
+      <path d="M210 136 C192 114 168 112 154 126 C170 144 194 148 210 136 Z"/>
+    </g>
+    <path d="M6 96 C20 86 34 84 46 86" stroke="#c9f5ec" stroke-width="2" fill="none" opacity=".8"/>
+    <path d="M194 100 C180 90 166 88 154 90" stroke="#c9f5ec" stroke-width="2" fill="none" opacity=".8"/>
+    <!-- cabello largo detras -->
+    <path d="M52 92 C42 140 38 176 50 200 L150 200 C162 176 158 140 148 92 C146 50 54 50 52 92 Z" fill="#2a1a24"/>
+    <!-- blusa -->
+    <path d="M18 200 C22 162 58 146 100 146 C142 146 178 162 182 200 Z" fill="#8f9be0"/>
+    <path d="M78 146 Q100 174 122 146 Z" fill="#a86f47"/>
+    <path d="M18 200 C20 184 28 172 40 164 L62 200 Z" fill="#7482d6"/>
+    <path d="M182 200 C180 184 172 172 160 164 L138 200 Z" fill="#7482d6"/>
+    <circle cx="100" cy="176" r="3.2" fill="#ffd166"/>
+    <path d="M78 156 Q100 182 122 156" stroke="#ffd166" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <!-- cuello y cabeza -->
+    <rect x="88" y="120" width="24" height="26" rx="8" fill="#9a6541"/>
+    <ellipse cx="100" cy="90" rx="36" ry="40" fill="#b9784f"/>
+    <!-- flequillo -->
+    <path d="M62 86 C58 48 142 48 138 86 C130 66 116 58 100 58 C84 58 70 66 62 86 Z" fill="#2a1a24"/>
+    <path d="M100 58 C96 70 86 76 74 78" stroke="#2a1a24" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <!-- flor -->
+    <g transform="translate(132 62)">
+      <g fill="#d74886"><circle cx="0" cy="-9" r="7"/><circle cx="9" cy="-3" r="7"/><circle cx="6" cy="8" r="7"/><circle cx="-6" cy="8" r="7"/><circle cx="-9" cy="-3" r="7"/></g>
+      <circle r="6" fill="#ffd166"/>
+    </g>
+    <!-- rostro -->
+    <path d="M78 84 Q86 80 94 84" stroke="#2a1a24" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M106 84 Q114 80 122 84" stroke="#2a1a24" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <circle cx="86" cy="95" r="4.4" fill="#160e16"/><circle cx="114" cy="95" r="4.4" fill="#160e16"/>
+    <circle cx="87.5" cy="93.6" r="1.4" fill="#fff"/><circle cx="115.5" cy="93.6" r="1.4" fill="#fff"/>
+    <path d="M100 96 Q96 106 101 107" stroke="#8f5a38" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    <path d="M85 111 Q100 125 115 111" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M85 111 Q100 125 115 111" stroke="#6b2b34" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".55"/>
+    <circle cx="74" cy="107" r="6" fill="#d74886" opacity=".28"/><circle cx="126" cy="107" r="6" fill="#d74886" opacity=".28"/>
+  </g>
+</svg>

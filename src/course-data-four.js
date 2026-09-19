@@ -39,7 +39,7 @@ window.COURSE_DATA = [
     phase: "Fase 4",
     title: "Medición y escalamiento",
     short: "Aprende a asignar números o etiquetas a los atributos que interesan al estudio y a elegir la escala y la técnica de escalamiento adecuadas.",
-    source: "Libro PARTE1.docx.pdf",
+    source: "Inteligencia en la Investigación de Mercados Efectiva · Parte 1",
     pages: "PDF, páginas 64-70",
     figure: {
       src: "assets/book/parte1-p067-escalas-basicas.png",
@@ -87,11 +87,11 @@ window.COURSE_DATA = [
       {
         id: "u5-gallery-escalas",
         type: "gallery",
-        title: "Diapositivas: del atributo a la escala",
-        description: "Presentación de diez diapositivas que recorre la medición, las escalas básicas y las técnicas de escalamiento con ejemplos.",
-        preview: "assets/unit-5/portada-diapositivas.png",
-        slides: Array.from({ length: 10 }, (_, index) => `assets/unit-5/slides/slide-${String(index + 1).padStart(2, "0")}.png`),
-        note: "La presentación reúne las diez ideas centrales de la Unidad 5, en el mismo orden de la teoría.",
+        title: "Presentación: las escalas en un caso real",
+        description: "Diez diapositivas que aplican las escalas nominal, ordinal, de intervalo y de razón, y las escalas Likert y de diferencial semántico, a una encuesta de satisfacción de una cafetería.",
+        preview: "assets/unit-5/portada-diapositivas.png?v=2",
+        slides: Array.from({ length: 10 }, (_, index) => `assets/unit-5/slides/slide-${String(index + 1).padStart(2, "0")}.png?v=3`),
+        note: "Complementa el video con un caso: la cafetería «Café Aroma» es un ejemplo inventado para practicar la elección de la escala; los conceptos provienen de «Inteligencia en la Investigación de Mercados Efectiva».",
         source: "Recurso educativo · Unidad 5"
       }
     ],
@@ -171,7 +171,7 @@ window.COURSE_DATA = [
     phase: "Fase 5",
     title: "Diseño del cuestionario",
     short: "Construye un cuestionario que reduzca el error de respuesta, desde la información requerida hasta la prueba piloto.",
-    source: "Libro PARTE2.docx.pdf",
+    source: "Inteligencia en la Investigación de Mercados Efectiva · Parte 2",
     pages: "PDF, páginas 2-6",
     figure: {
       src: "assets/unit-6/figura-embudo-cuestionario.png",
@@ -219,10 +219,10 @@ window.COURSE_DATA = [
       {
         id: "u6-infografia-cuestionario",
         type: "image",
-        title: "Ruta visual del diseño del cuestionario",
-        description: "Infografía panorámica con los nueve pasos del diseño, los tipos de pregunta, las reglas de redacción y el orden del cuestionario.",
-        src: "assets/unit-6/infografia-diseno-cuestionario.png",
-        preview: "assets/unit-6/infografia-diseno-cuestionario.png",
+        title: "Un cuestionario, paso a paso",
+        description: "Un cuestionario de ejemplo con sus partes señaladas (número único, filtro, preguntas estructuradas y no estructuradas, embudo y prueba piloto) y cuatro errores de redacción con su corrección.",
+        src: "assets/unit-6/infografia-diseno-cuestionario.png?v=2",
+        preview: "assets/unit-6/infografia-diseno-cuestionario.png?v=2",
         source: "Infografía educativa · Unidad 6"
       }
     ],
@@ -290,7 +290,7 @@ window.COURSE_DATA = [
     phase: "Fase 6",
     title: "Diseño de la muestra",
     short: "Define a quién le preguntarás: población, marco de muestreo, técnica y tamaño de la muestra.",
-    source: "Libro PARTE2.docx.pdf",
+    source: "Inteligencia en la Investigación de Mercados Efectiva · Parte 2",
     pages: "PDF, páginas 8-17",
     figure: {
       src: "assets/unit-7/figura-factores-muestreo.png",
@@ -338,10 +338,10 @@ window.COURSE_DATA = [
       {
         id: "u7-infografia-muestra",
         type: "image",
-        title: "Guía visual para elegir la muestra",
-        description: "Infografía panorámica con el proceso de diseño de la muestra, las ocho técnicas de muestreo y las fórmulas del tamaño de la muestra.",
-        src: "assets/unit-7/infografia-diseno-muestra.png",
-        preview: "assets/unit-7/infografia-diseno-muestra.png",
+        title: "Elegir 10 de 100: ocho técnicas de muestreo",
+        description: "La misma población de 100 personas y ocho formas de seleccionar la muestra (cuatro no probabilísticas y cuatro probabilísticas), con la fórmula del tamaño de la muestra.",
+        src: "assets/unit-7/infografia-diseno-muestra.png?v=2",
+        preview: "assets/unit-7/infografia-diseno-muestra.png?v=2",
         source: "Infografía educativa · Unidad 7"
       }
     ],
@@ -408,7 +408,7 @@ window.COURSE_DATA = [
     phase: "Fase 7",
     title: "Trabajo de campo",
     short: "Planifica, organiza y controla la recolección de datos: personal, tiempo, presupuesto, supervisión y validación.",
-    source: "Libro PARTE2.docx.pdf",
+    source: "Inteligencia en la Investigación de Mercados Efectiva · Parte 2",
     pages: "PDF, páginas 19-27",
     figure: {
       src: "assets/book/parte2-p022-proceso-campo.png",
@@ -456,10 +456,10 @@ window.COURSE_DATA = [
       {
         id: "u8-infografia-campo",
         type: "image",
-        title: "Ruta visual del trabajo de campo",
-        description: "Infografía panorámica con la planificación, el proceso de cinco etapas, las técnicas de sondeo y los controles de supervisión.",
-        src: "assets/unit-8/infografia-trabajo-campo.png",
-        preview: "assets/unit-8/infografia-trabajo-campo.png",
+        title: "Una campaña de campo, de principio a fin",
+        description: "Qué ocurre antes, durante y después del trabajo de campo, con un ejemplo numérico de las tasas de elegibilidad, contacto, respuesta y rechazo.",
+        src: "assets/unit-8/infografia-trabajo-campo.png?v=2",
+        preview: "assets/unit-8/infografia-trabajo-campo.png?v=2",
         source: "Infografía educativa · Unidad 8"
       }
     ],

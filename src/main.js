@@ -700,7 +700,7 @@
       <div class="book-media-player">
         <iframe src="${escapeHTML(resource.previewUrl)}" title="${typeLabel}: ${escapeHTML(resource.title)}" allow="autoplay; fullscreen" allowfullscreen loading="eager"></iframe>
         <div class="resource-study-note">
-          <strong>Recurso original del libro</strong>
+          <strong>Recurso original de «Inteligencia en la Investigación de Mercados Efectiva»</strong>
           <p>Puedes reproducirlo aquí, escanear el código QR o abrir el destino original en una pestaña nueva.</p>
           <div class="embedded-resource-actions">
             <img src="${escapeHTML(resource.qr)}" alt="Código QR para ${escapeHTML(resource.title)}">

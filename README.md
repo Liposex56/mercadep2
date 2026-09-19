@@ -6,8 +6,8 @@ Segunda aplicación web pedagógica del curso. Conserva la estructura, el códig
 
 Toda la teoría, las actividades, las evaluaciones y las figuras se construyeron exclusivamente con los archivos entregados:
 
-- `Libro PARTE1.docx.pdf`: Unidad 5 (páginas 64 a 70 del PDF).
-- `Libro PARTE2.docx.pdf`: Unidad 6 (páginas 2 a 6), Unidad 7 (páginas 8 a 17) y Unidad 8 (páginas 19 a 27).
+- `Libro PARTE1.docx.pdf` (Inteligencia en la Investigación de Mercados Efectiva, Parte 1): Unidad 5 (páginas 64 a 70 del PDF).
+- `Libro PARTE2.docx.pdf` (Inteligencia en la Investigación de Mercados Efectiva, Parte 2): Unidad 6 (páginas 2 a 6), Unidad 7 (páginas 8 a 17) y Unidad 8 (páginas 19 a 27).
 
 No se incorporaron fuentes teóricas de internet. Los videos, las diapositivas y las infografías se elaboraron para este proyecto a partir de esas páginas.
 
@@ -15,10 +15,10 @@ No se incorporaron fuentes teóricas de internet. Los videos, las diapositivas y
 
 | Unidad | Tema | Recursos educativos |
 | --- | --- | --- |
-| 5 · Fase 4 | Medición y escalamiento | Video de 5 min y presentación de 10 diapositivas |
-| 6 · Fase 5 | Diseño del cuestionario | Video de 5,5 min e infografía panorámica |
-| 7 · Fase 6 | Diseño de la muestra | Video de 6 min e infografía panorámica |
-| 8 · Fase 7 | Trabajo de campo | Video de 5,5 min e infografía panorámica |
+| 5 · Fase 4 | Medición y escalamiento | Video de 5 min y presentación de 10 diapositivas (caso de una cafetería) |
+| 6 · Fase 5 | Diseño del cuestionario | Video de 5,5 min e infografía (cuestionario de ejemplo anotado) |
+| 7 · Fase 6 | Diseño de la muestra | Video de 6 min e infografía (ocho técnicas de muestreo) |
+| 8 · Fase 7 | Trabajo de campo | Video de 5,5 min e infografía (campaña de campo y tasas de desempeño) |
 
 En cada unidad el estudiante sigue el mismo orden que en la Parte 1: proyecto aplicado, teoría, recursos educativos, dos actividades, y evaluación de cinco preguntas (80 % para aprobar). Al aprobar cada unidad recibe una insignia; el certificado requiere aprobar las cuatro unidades y la evaluación final integradora.
 

@@ -1194,19 +1194,38 @@ a.button-primary, a.button-primary:visited { color: white; }
 }
 .site-footer[hidden] { display: none; }
 .site-footer-inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) auto;
-  align-items: center;
-  gap: 18px 34px;
   width: min(var(--max), calc(100% - 40px));
   margin: 0 auto;
-  padding: 30px 0 34px;
+  padding: 30px 0 22px;
 }
-.site-footer-brand { display: flex; align-items: center; gap: 13px; }
-.site-footer-brand img { width: 40px; height: 40px; }
-.site-footer-brand strong { display: block; font-size: .98rem; }
-.site-footer-brand span { color: var(--ink-soft); font-size: .78rem; }
-.site-footer-nav { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: flex-end; }
+.site-footer-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px 48px;
+}
+.site-footer-brand { display: flex; align-items: flex-start; gap: 16px; flex: 1 1 560px; min-width: 0; }
+.site-footer-brand > img { flex: 0 0 auto; width: 46px; height: 46px; margin-top: 2px; }
+.site-footer-brand strong { display: block; font-size: 1.02rem; }
+.site-footer-brand strong + span { display: block; color: var(--ink-soft); font-size: .8rem; }
+.site-footer-legal { max-width: 640px; margin: 10px 0 0; color: var(--ink-soft); font-size: .76rem; line-height: 1.5; }
+.site-footer-logos {
+  flex: 0 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px 26px;
+}
+.site-footer-logos img { width: auto; height: 52px; max-width: 200px; object-fit: contain; }
+.site-footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
 .site-footer-nav button {
   padding: 4px 0;
   border: 0;
@@ -1217,25 +1236,6 @@ a.button-primary, a.button-primary:visited { color: white; }
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
-}
-.site-footer-logos {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 22px;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
-}
-.site-footer-logos:empty { display: none; }
-.site-footer-logos img { width: auto; height: 46px; object-fit: contain; }
-.site-footer-legal {
-  grid-column: 1 / -1;
-  margin: 0;
-  padding-top: 14px;
-  color: var(--ink-soft);
-  font-size: .75rem;
-  line-height: 1.5;
 }
 
 /* ---- Créditos ---- */
@@ -1259,9 +1259,9 @@ a.button-primary, a.button-primary:visited { color: white; }
 .credits-note { margin-top: 18px; padding: 22px 30px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(250, 250, 253, .82); }
 .credits-note p { margin-bottom: 0; color: var(--ink-soft); font-size: .84rem; }
 
-@media (max-width: 720px) {
-  .site-footer-inner { grid-template-columns: 1fr; }
-  .site-footer-nav { justify-content: flex-start; }
+@media (max-width: 860px) {
+  .site-footer-main { flex-direction: column; align-items: flex-start; }
+  .site-footer-logos { justify-content: flex-start; }
 }
 
 /* ---- Repaso de evaluación al no aprobar ---- */

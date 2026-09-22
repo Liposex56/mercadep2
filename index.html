@@ -6,7 +6,7 @@
   <meta name="description" content="Parte 2 de la experiencia pedagógica basada en el libro Inteligencia en la Investigación de Mercados Efectiva: medición, cuestionario, muestra y trabajo de campo.">
   <title>Investigación de Mercados Efectiva · Parte 2</title>
   <link rel="icon" href="assets/logo-mercados.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="src/styles.css?v=p2-5">
+  <link rel="stylesheet" href="src/styles.css?v=p2-6">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.111.0/dist/umd/supabase.min.js"></script>
   <script src="vendor/jspdf.umd.min.js"></script>
 </head>
@@ -132,6 +132,11 @@
       <button id="finalEvaluationButton" class="button button-primary" type="button">Iniciar evaluación final</button>
     </section>
 
+    <section id="reviewChallenge" class="final-challenge">
+      <div><p class="eyebrow">Refuerzo personalizado</p><h2>Repaso inteligente</h2><p id="reviewSummaryText">Por ahora no tienes preguntas pendientes.</p></div>
+      <button id="reviewButton" class="button button-primary" type="button" hidden>Repasar ahora</button>
+    </section>
+
     <section class="simulator-invitation" aria-labelledby="simulatorInviteTitle">
       <div class="simulator-invitation-icon" aria-hidden="true">◎</div>
       <div><p class="eyebrow">Práctica integradora</p><h2 id="simulatorInviteTitle">Experimenta con el simulador guiado</h2><p>Toma ocho decisiones sobre la escala, el cuestionario, la muestra y el trabajo de campo, administra tiempo y recursos y cambia la ruta para comparar coherencia, viabilidad y calidad.</p></div>
@@ -149,7 +154,7 @@
         <div class="progress-copy"><span>Progreso de la unidad</span><strong id="unitProgressText">0%</strong></div>
         <div class="progress-track" role="progressbar" aria-label="Progreso de la unidad" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="unitProgressBar"></span></div>
       </div>
-      <aside class="unit-source-card"><span aria-hidden="true">▤</span><strong id="unitSourceName">Material base</strong><small id="unitSourcePages">Páginas</small></aside>
+      <a id="unitSourceCard" class="unit-source-card" href="#" download aria-label="Descargar el PDF de esta unidad"><span aria-hidden="true">▤</span><strong id="unitSourceName">Material base</strong><small id="unitSourcePages">Páginas</small><em id="unitSourceDownload" aria-hidden="true">Descargar PDF ↓</em></a>
     </section>
     <nav id="stageTrack" class="stage-track" aria-label="Etapas de la unidad"></nav>
 
@@ -178,7 +183,7 @@
     </section>
 
     <section id="evaluationSection" class="learning-section evaluation-section">
-      <div class="section-heading compact"><div><p class="eyebrow">Verificación de aprendizaje</p><h2>Evaluación de la unidad</h2><p>Las cinco preguntas se presentan en una ventana, una por una.</p></div><span class="section-symbol" aria-hidden="true">✓</span></div>
+      <div class="section-heading compact"><div><p class="eyebrow">Verificación de aprendizaje</p><h2>Evaluación de la unidad</h2><p>Las diez preguntas se presentan en una ventana, una por una.</p></div><span class="section-symbol" aria-hidden="true">✓</span></div>
       <div id="evaluationContainer"></div>
     </section>
   </main>
@@ -293,7 +298,7 @@
     <article class="modal-panel">
       <header class="modal-header"><div><p class="eyebrow">Base conceptual</p><h2 id="theoryModalTitle">Tema</h2></div><button class="modal-close" type="button" data-close-modal aria-label="Cerrar">×</button></header>
       <div id="theoryModalBody" class="modal-body"></div>
-      <footer id="theoryModalSource" class="modal-source"></footer>
+      <footer id="theoryModalSource" class="modal-source"><span id="theoryModalSourceText"></span><a id="theoryModalSourceLink" href="#" download>Descargar el PDF ↓</a></footer>
     </article>
   </div>
 
@@ -330,6 +335,14 @@
     <article class="modal-panel modal-panel-wide">
       <header class="modal-header"><div><p class="eyebrow">Cierre integrador</p><h2 id="finalModalTitle">Evaluación final</h2></div><button class="modal-close" type="button" data-close-final aria-label="Cerrar">×</button></header>
       <div id="finalModalBody" class="modal-body"></div>
+    </article>
+  </div>
+
+  <div id="reviewModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle" aria-hidden="true">
+    <button class="modal-overlay" type="button" data-close-review aria-label="Cerrar"></button>
+    <article class="modal-panel modal-panel-wide">
+      <header class="modal-header"><div><p class="eyebrow">Refuerzo personalizado</p><h2 id="reviewModalTitle">Repaso inteligente</h2></div><button class="modal-close" type="button" data-close-review aria-label="Cerrar">×</button></header>
+      <div id="reviewModalBody" class="modal-body"></div>
     </article>
   </div>
 
@@ -373,7 +386,7 @@
     </section>
     <button id="supportToggle" class="support-toggle" type="button" aria-label="Abrir apoyo de la unidad"><img src="assets/logo-mercados.svg" alt=""><span>Ayuda</span></button>
   </aside>
-  <script src="src/course-data-four.js?v=p2-3"></script>
-  <script src="src/main.js?v=p2-4"></script>
+  <script src="src/course-data-four.js?v=p2-5"></script>
+  <script src="src/main.js?v=p2-6"></script>
 </body>
 </html>

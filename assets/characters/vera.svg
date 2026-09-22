@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t d">
+  <title id="t">Vera</title>
+  <desc id="d">Personaje con anteojos, cabello corto y una insignia de balanza, frente a una gráfica de barras (medición y escalas).</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9d1ff"/>
+      <stop offset="1" stop-color="#eef0ff"/>
+    </linearGradient>
+    <clipPath id="c"><circle cx="100" cy="100" r="100"/></clipPath>
+  </defs>
+  <g clip-path="url(#c)">
+    <rect width="200" height="200" fill="url(#bg)"/>
+    <!-- gráfica de barras de fondo -->
+    <g opacity=".55">
+      <rect x="12" y="128" width="18" height="60" rx="3" fill="#9aa4ec"/>
+      <rect x="36" y="104" width="18" height="84" rx="3" fill="#7c86d6"/>
+      <rect x="164" y="118" width="18" height="70" rx="3" fill="#7c86d6"/>
+      <rect x="188" y="90" width="14" height="98" rx="3" fill="#9aa4ec"/>
+    </g>
+    <!-- jersey -->
+    <path d="M14 200 C18 160 56 142 100 142 C144 142 182 160 186 200 Z" fill="#202765"/>
+    <path d="M78 144 Q100 168 122 144" stroke="#3a45b5" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- cabello (detrás) -->
+    <circle cx="100" cy="68" r="44" fill="#241a2e"/>
+    <!-- cuello y cabeza -->
+    <rect x="88" y="118" width="24" height="26" rx="8" fill="#c98d62"/>
+    <circle cx="62" cy="92" r="8" fill="#d9a37b"/>
+    <circle cx="138" cy="92" r="8" fill="#d9a37b"/>
+    <ellipse cx="100" cy="88" rx="38" ry="40" fill="#e0aa82"/>
+    <!-- mechones laterales -->
+    <path d="M58 84 C56 102 58 118 64 132 L60 96 Z" fill="#241a2e"/>
+    <path d="M142 84 C144 102 142 118 136 132 L140 96 Z" fill="#241a2e"/>
+    <!-- rostro -->
+    <path d="M78 76 Q86 72 94 76" stroke="#241a2e" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M106 76 Q114 72 122 76" stroke="#241a2e" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <circle cx="86" cy="90" r="4.2" fill="#1a1530"/><circle cx="114" cy="90" r="4.2" fill="#1a1530"/>
+    <circle cx="87.4" cy="88.6" r="1.3" fill="#fff"/><circle cx="115.4" cy="88.6" r="1.3" fill="#fff"/>
+    <path d="M100 92 Q96 102 101 103" stroke="#b97c55" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    <path d="M86 108 Q100 120 114 108" stroke="#8a3f3f" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+    <circle cx="76" cy="104" r="6" fill="#d74886" opacity=".22"/><circle cx="124" cy="104" r="6" fill="#d74886" opacity=".22"/>
+    <!-- anteojos -->
+    <g fill="none" stroke="#121744" stroke-width="3">
+      <circle cx="86" cy="90" r="12"/><circle cx="114" cy="90" r="12"/>
+      <path d="M98 90 L102 90"/><path d="M74 88 L64 86"/><path d="M126 88 L136 86"/>
+    </g>
+    <!-- insignia de balanza -->
+    <g transform="translate(100 160)">
+      <circle r="13" fill="#ffd166" stroke="#fff" stroke-width="2.4"/>
+      <path d="M0 -6 L0 6 M-7 -6 L7 -6 M-7 3 L-3 -6 L-1 3 M7 3 L3 -6 L1 3" stroke="#121744" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>

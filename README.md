@@ -20,7 +20,7 @@ No se incorporaron fuentes teóricas de internet. Los videos, las diapositivas y
 | 7 · Fase 6 | Diseño de la muestra | Video de 6 min e infografía (ocho técnicas de muestreo) |
 | 8 · Fase 7 | Trabajo de campo | Video de 5,5 min e infografía (campaña de campo y tasas de desempeño) |
 
-En cada unidad el estudiante sigue el mismo orden que en la Parte 1: proyecto aplicado, teoría, recursos educativos, dos actividades, y evaluación de cinco preguntas (80 % para aprobar). Al aprobar cada unidad recibe una insignia; el certificado requiere aprobar las cuatro unidades y la evaluación final integradora.
+En cada unidad el estudiante sigue el mismo orden que en la Parte 1: proyecto aplicado, teoría, recursos educativos, dos actividades, y evaluación de diez preguntas (80 % para aprobar). Al aprobar cada unidad recibe una insignia; el certificado requiere aprobar las cuatro unidades y la evaluación final integradora.
 
 ## Recursos del libro (códigos QR)
 
@@ -52,7 +52,7 @@ Luego abre `http://127.0.0.1:8080/`.
 - `src/course-data-four.js`: contenido académico de las unidades 5 a 8, recursos, códigos QR, simulador y créditos.
 - `src/main.js`: autenticación, progreso, actividades, evaluaciones, simulador y certificado.
 - `src/styles.css`: sistema visual responsive (los colores están definidos en `:root`).
-- `assets/characters/`: cuatro avatares vectoriales (Inti, Coral, Río y Brisa).
+- `assets/characters/`: cuatro avatares vectoriales, cada uno con un rol de investigación de mercados (Vera, medición; Nico, cuestionario; Mila, muestra; Teo, campo).
 - `assets/unit-5/` a `assets/unit-8/`: videos, diapositivas, infografías y portadas.
 - `assets/book/`: figuras del libro y códigos QR originales.
 - `assets/logos/`: logos institucionales para el pie de página y el certificado.

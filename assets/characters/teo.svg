@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t d">
+  <title id="t">Teo</title>
+  <desc id="d">Personaje con audífonos de entrevistador y tableta al cuello, frente a una ruta punteada con un marcador (trabajo de campo).</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe3ac"/>
+      <stop offset="1" stop-color="#fff5e0"/>
+    </linearGradient>
+    <clipPath id="c"><circle cx="100" cy="100" r="100"/></clipPath>
+  </defs>
+  <g clip-path="url(#c)">
+    <rect width="200" height="200" fill="url(#bg)"/>
+    <!-- ruta punteada y marcador -->
+    <path d="M14 40 C40 60 30 90 60 100 C90 110 96 140 130 148" stroke="#e0a24a" stroke-width="4" stroke-dasharray="2 10" stroke-linecap="round" fill="none" opacity=".8"/>
+    <g transform="translate(150 150)">
+      <path d="M0 -16 C10 -16 17 -9 17 1 C17 12 0 26 0 26 C0 26 -17 12 -17 1 C-17 -9 -10 -16 0 -16 Z" fill="#d74886"/>
+      <circle cy="0" r="6" fill="#fff"/>
+    </g>
+    <!-- chaleco -->
+    <path d="M18 200 C22 160 58 142 100 142 C142 142 178 160 182 200 Z" fill="#202765"/>
+    <path d="M18 200 C20 184 28 172 40 164 L62 200 Z" fill="#ffd166"/>
+    <path d="M182 200 C180 184 172 172 160 164 L138 200 Z" fill="#ffd166"/>
+    <path d="M78 142 Q100 172 122 142 Z" fill="#a5734a"/>
+    <!-- tableta colgada -->
+    <path d="M84 148 Q100 172 116 148" stroke="#121744" stroke-width="3" fill="none"/>
+    <rect x="88" y="168" width="24" height="18" rx="3" fill="#fff" stroke="#121744" stroke-width="2.4"/>
+    <line x1="92" y1="174" x2="108" y2="174" stroke="#a83366" stroke-width="2" stroke-linecap="round"/>
+    <line x1="92" y1="179" x2="102" y2="179" stroke="#a83366" stroke-width="2" stroke-linecap="round"/>
+        <!-- cabello (detrás) -->
+    <circle cx="100" cy="68" r="44" fill="#2a1a24"/>
+    <!-- cuello y cabeza -->
+    <rect x="88" y="118" width="24" height="26" rx="8" fill="#9a6541"/>
+    <circle cx="62" cy="92" r="8" fill="#b0754a"/>
+    <circle cx="138" cy="92" r="8" fill="#b0754a"/>
+    <ellipse cx="100" cy="90" rx="37" ry="40" fill="#b9784f"/>
+    <!-- audifonos de entrevistador -->
+    <path d="M56 84 C54 40 146 40 144 84" stroke="#121744" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <rect x="48" y="80" width="14" height="26" rx="7" fill="#ffd166"/>
+    <rect x="138" y="80" width="14" height="26" rx="7" fill="#ffd166"/>
+    <path d="M62 100 Q70 112 82 116" stroke="#121744" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="83" cy="117" r="3" fill="#121744"/>
+    <!-- rostro -->
+    <path d="M78 84 Q86 80 94 84" stroke="#2a1a24" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M106 84 Q114 80 122 84" stroke="#2a1a24" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <circle cx="86" cy="95" r="4.4" fill="#160e16"/><circle cx="114" cy="95" r="4.4" fill="#160e16"/>
+    <circle cx="87.5" cy="93.6" r="1.4" fill="#fff"/><circle cx="115.5" cy="93.6" r="1.4" fill="#fff"/>
+    <path d="M100 96 Q96 106 101 107" stroke="#8f5a38" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    <path d="M85 111 Q100 125 115 111" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M85 111 Q100 125 115 111" stroke="#6b2b34" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".55"/>
+    <circle cx="74" cy="107" r="6" fill="#d74886" opacity=".28"/><circle cx="126" cy="107" r="6" fill="#d74886" opacity=".28"/>
+  </g>
+</svg>

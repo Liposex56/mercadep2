@@ -6,6 +6,8 @@
   const PROGRESS_FIELD = "market_research_course_p2_v1";
   const LOCAL_PREFIX = "investigacion_mercados_efectiva_p2_v1";
   const PASSING_SCORE = 80;
+  const FINAL_QUIZ_SIZE = 10;
+  const REVIEW_QUIZ_MAX = 15;
   const course = Array.isArray(window.COURSE_DATA) ? window.COURSE_DATA : [];
   const courseCredits = Array.isArray(window.COURSE_CREDITS) ? window.COURSE_CREDITS : [];
   const bookMedia = Array.isArray(window.BOOK_MEDIA) ? window.BOOK_MEDIA : [];
@@ -59,10 +61,10 @@
   // "none" existe como opcion en dos decisiones (piloto y control): sus valores son iguales (0).
   const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
   const AVATARS = [
-    { id: "inti", name: "Inti", description: "Montañas y páramo · Región Andina", voiceSlot: 0, pitch: 0.9, rate: 0.92 },
-    { id: "coral", name: "Coral", description: "Playas y mar · Región Caribe", voiceSlot: 1, pitch: 1.08, rate: 0.96 },
-    { id: "rio", name: "Río", description: "Llanos y sabana · Orinoquía", voiceSlot: 2, pitch: 0.95, rate: 0.9 },
-    { id: "brisa", name: "Brisa", description: "Selva y costa · Región Pacífica", voiceSlot: 3, pitch: 1.14, rate: 1 }
+    { id: "vera", name: "Vera", description: "Analista de datos · Medición y escalas", voiceSlot: 0, pitch: 0.9, rate: 0.92 },
+    { id: "nico", name: "Nico", description: "Diseñador de encuestas · Cuestionario", voiceSlot: 1, pitch: 1.08, rate: 0.96 },
+    { id: "mila", name: "Mila", description: "Especialista en muestreo · Diseño de la muestra", voiceSlot: 2, pitch: 0.95, rate: 0.9 },
+    { id: "teo", name: "Teo", description: "Coordinador de campo · Trabajo de campo", voiceSlot: 3, pitch: 1.14, rate: 1 }
   ];
   // Configuración del certificado. Coloca los logos en assets/logos/ con estos nombres.
   // Si un archivo no existe, el certificado simplemente omite ese logo.
@@ -100,6 +102,9 @@
     supportAnswer: "",
     motivationIndex: 0,
     motivationTimer: null,
+    finalQuizQuestions: null,
+    reviewQuizQuestions: null,
+    reviewQuizAnswers: null,
     simulatorStep: 0
   };
 
@@ -116,7 +121,8 @@
       quizzes: {},
       avatar: null,
       finalResult: null,
-      simulator: null
+      simulator: null,
+      reviewStats: {}
     };
   }
 
@@ -137,6 +143,7 @@
     clean.resources = raw.resources && typeof raw.resources === "object" ? raw.resources : {};
     clean.practice = raw.practice && typeof raw.practice === "object" ? raw.practice : {};
     clean.quizzes = raw.quizzes && typeof raw.quizzes === "object" ? raw.quizzes : {};
+    clean.reviewStats = raw.reviewStats && typeof raw.reviewStats === "object" ? raw.reviewStats : {};
     clean.avatar = typeof raw.avatar === "string" && AVATARS.some((avatar) => avatar.id === raw.avatar) ? raw.avatar : null;
     clean.finalResult = raw.finalResult && typeof raw.finalResult === "object" ? raw.finalResult : null;
     clean.simulator = raw.simulator && typeof raw.simulator === "object"
@@ -251,6 +258,20 @@
           date: selectedQuiz.date || null
         };
       }
+    });
+
+    new Set([...Object.keys(local.reviewStats), ...Object.keys(cloud.reviewStats)]).forEach((reviewKey) => {
+      const a = local.reviewStats[reviewKey] || {};
+      const b = cloud.reviewStats[reviewKey] || {};
+      const aTime = Date.parse(a.lastSeen || "") || 0;
+      const bTime = Date.parse(b.lastSeen || "") || 0;
+      const latest = aTime >= bTime ? a : b;
+      merged.reviewStats[reviewKey] = {
+        misses: Math.max(Number(a.misses || 0), Number(b.misses || 0)),
+        correct: Math.max(Number(a.correct || 0), Number(b.correct || 0)),
+        needsReview: Boolean(latest.needsReview),
+        lastSeen: latest.lastSeen || null
+      };
     });
 
     const localFinal = local.finalResult || {};
@@ -613,6 +634,7 @@
     byId("continueButton").textContent = passed === course.length
       ? `Revisar Unidad ${course[course.length - 1]?.id}`
       : `${getUnit(highest)?.id === course[0]?.id && overall === 0 ? "Comenzar" : "Continuar"} Unidad ${highest}`;
+    renderReviewChallenge();
 
     byId("unitMap").innerHTML = course.map((unit) => {
       const complete = isQuizPassed(unit);
@@ -1103,6 +1125,9 @@
     byId("unitDescription").textContent = unit.short;
     byId("unitSourceName").textContent = "Material base";
     byId("unitSourcePages").textContent = unit.pages;
+    const unitPdfHref = pdfHrefForUnit(unit);
+    byId("unitSourceCard").setAttribute("href", unitPdfHref);
+    byId("unitSourceCard").setAttribute("download", unitPdfHref.split("/").pop());
     byId("unitProgressText").textContent = `${progress}%`;
     byId("unitProgressBar").style.width = `${progress}%`;
     byId("unitProgressBar").parentElement.setAttribute("aria-valuenow", String(progress));
@@ -1224,7 +1249,10 @@
     applySectionLocks(unit);
     byId("theoryModalTitle").textContent = item.title;
     byId("theoryModalBody").innerHTML = item.content;
-    byId("theoryModalSource").textContent = `Unidad ${unit.id} · ${unit.pages.replace(/^PDF,?\s*/i, "")}`;
+    byId("theoryModalSourceText").textContent = `Unidad ${unit.id} · ${unit.pages.replace(/^PDF,?\s*/i, "")}`;
+    const theoryPdfHref = pdfHrefForUnit(unit);
+    byId("theoryModalSourceLink").setAttribute("href", theoryPdfHref);
+    byId("theoryModalSourceLink").setAttribute("download", theoryPdfHref.split("/").pop());
     const modal = byId("theoryModal");
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
@@ -1735,7 +1763,7 @@
     byId("evaluationContainer").innerHTML = `
       <article class="quiz-launch-card">
         <div class="quiz-launch-symbol" aria-hidden="true">✓</div>
-        <div><p class="eyebrow">Cinco retos breves</p><h3>Comprueba lo aprendido sin salir de la unidad</h3><p>Cada pregunta aparecerá por separado. Podrás avanzar o regresar antes de enviar tus respuestas.</p></div>
+        <div><p class="eyebrow">Diez retos breves</p><h3>Comprueba lo aprendido sin salir de la unidad</h3><p>Cada pregunta aparecerá por separado. Podrás avanzar o regresar antes de enviar tus respuestas.</p></div>
         <button id="openUnitQuiz" class="button button-primary" type="button">${record.passed ? "Volver a presentar" : hasAttempt ? "Intentar de nuevo" : "Abrir evaluación"}</button>
       </article>
       ${hasAttempt || record.passed ? `
@@ -1830,6 +1858,9 @@
     }
     const correct = unit.quiz.filter((question, index) => answers[index] === question.correct).length;
     const score = Math.round((correct / unit.quiz.length) * 100);
+    unit.quiz.forEach((question, index) => {
+      recordQuestionResult({ unitId: unit.id, qIndex: index }, answers[index] === question.correct);
+    });
     const previous = getQuiz(unit.id);
     const wasPassed = Boolean(previous.passed);
     state.progress.quizzes[String(unit.id)] = {
@@ -1964,7 +1995,7 @@
       "Teoría": "Abre y revisa las tres tarjetas conceptuales.",
       "Recursos educativos": "Reproduce el video hasta el 70% y finaliza la revisión de los demás recursos visuales.",
       "Práctica": "Completa las dos actividades diferentes del laboratorio de la unidad.",
-      "Evaluación": "Abre la ventana y responde las cinco preguntas, una por una."
+      "Evaluación": "Abre la ventana y responde las diez preguntas, una por una."
     };
     return instructions[stageLabel] || "Revisa la indicación de la etapa activa.";
   }
@@ -2076,7 +2107,7 @@
     } else if (!finalResult?.passed) {
       byId("certificateArea").innerHTML = `
         <article class="certificate-card"><div><h3>Evaluación final disponible</h3><p>Puedes presentarla desde ahora. Para obtener el certificado también debes aprobar las cuatro unidades.</p></div><button id="profileFinalButton" class="button button-primary" type="button">Presentar evaluación</button></article>`;
-      byId("profileFinalButton").addEventListener("click", openFinalEvaluation);
+      byId("profileFinalButton").addEventListener("click", startFinalEvaluation);
     } else {
       byId("certificateArea").innerHTML = `
         <article class="certificate-card"><div><h3>Evaluación final aprobada</h3><p>Aprueba las ${course.length} unidades para habilitar el certificado.</p></div></article>`;
@@ -2224,12 +2255,56 @@
     }
   }
 
+  function allQuestionsPool() {
+    return course.flatMap((unit) => unit.quiz.map((question, qIndex) => ({
+      ...question,
+      unitId: unit.id,
+      qIndex,
+      key: `${unit.id}-${qIndex}`
+    })));
+  }
+
+  function pickFinalQuestions() {
+    const pool = allQuestionsPool();
+    const size = Math.min(FINAL_QUIZ_SIZE, pool.length);
+    return pool.sort(() => Math.random() - .5).slice(0, size);
+  }
+
+  function recordQuestionResult(question, wasCorrect) {
+    const key = question.key || `${question.unitId}-${question.qIndex}`;
+    const previous = state.progress.reviewStats[key] || { misses: 0, correct: 0, needsReview: false };
+    state.progress.reviewStats[key] = {
+      misses: Number(previous.misses || 0) + (wasCorrect ? 0 : 1),
+      correct: Number(previous.correct || 0) + (wasCorrect ? 1 : 0),
+      needsReview: !wasCorrect,
+      lastSeen: new Date().toISOString()
+    };
+  }
+
+  function getReviewQuestions() {
+    return allQuestionsPool().filter((question) => state.progress.reviewStats[question.key]?.needsReview);
+  }
+
+  function pickReviewQuestions() {
+    const pending = getReviewQuestions();
+    const size = Math.min(REVIEW_QUIZ_MAX, pending.length);
+    return pending.sort(() => Math.random() - .5).slice(0, size);
+  }
+
+  function startFinalEvaluation() {
+    state.finalQuizQuestions = pickFinalQuestions();
+    openFinalEvaluation();
+  }
+
   function openFinalEvaluation() {
     const previous = state.progress.finalResult || {};
-    const savedAnswers = Array.isArray(previous.answers) ? previous.answers : [];
-    const questions = course.map((unit) => ({ ...unit.quiz[0], unitId: unit.id }));
+    if (!Array.isArray(state.finalQuizQuestions) || !state.finalQuizQuestions.length) {
+      state.finalQuizQuestions = pickFinalQuestions();
+    }
+    const questions = state.finalQuizQuestions;
+    const savedAnswers = Array.isArray(state.finalQuizAnswers) ? state.finalQuizAnswers : [];
     byId("finalModalBody").innerHTML = `
-      <p>Esta evaluación integra una pregunta de cada una de las ${course.length} unidades. Necesitas al menos 80% para aprobar.</p>
+      <p>Esta evaluación toma ${questions.length} preguntas al azar, entre las 40 de las unidades 5 a 8. Cada intento trae una selección distinta. Necesitas al menos 80% para aprobar.</p>
       <form id="finalQuizForm" class="final-quiz-grid">
         ${questions.map((question, qIndex) => `
           <article class="quiz-question">
@@ -2242,9 +2317,9 @@
           </article>`).join("")}
         <button class="button button-primary" type="submit">Calificar evaluación final</button>
       </form>
-      ${previous.date ? `<div class="evaluation-result ${previous.passed ? "is-pass" : "is-fail"}"><h3>${previous.score}%</h3><p>${previous.passed ? "Evaluación final aprobada." : "Revisa las unidades y vuelve a intentarlo."}</p></div>` : ""}
+      ${previous.date ? `<div class="evaluation-result ${previous.passed ? "is-pass" : "is-fail"}"><h3>${previous.score}%</h3><p>${previous.passed ? "Evaluación final aprobada." : "Revisa las unidades y vuelve a intentarlo. La próxima vez te tocarán otras preguntas."}</p></div>` : ""}
       ${!previous.passed && savedAnswers.length
-        ? buildQuizReview(questions, savedAnswers, "Preguntas por reforzar")
+        ? buildQuizReview(questions, savedAnswers, "Preguntas por reforzar en este intento")
         : ""}`;
     byId("finalQuizForm").addEventListener("submit", (event) => gradeFinalQuiz(event, questions));
     const modal = byId("finalModal");
@@ -2261,27 +2336,119 @@
       return value === null ? null : Number(value);
     });
     if (answers.some((answer) => answer === null)) {
-      showToast(`Responde las ${course.length} preguntas antes de calificar.`);
+      showToast(`Responde las ${questions.length} preguntas antes de calificar.`);
       return;
     }
     const correct = questions.filter((question, index) => answers[index] === question.correct).length;
     const score = Math.round((correct / questions.length) * 100);
+    questions.forEach((question, index) => {
+      recordQuestionResult(question, answers[index] === question.correct);
+    });
     const previous = state.progress.finalResult || {};
     const bestScore = Math.max(Number(previous.score || 0), score);
+    state.finalQuizAnswers = answers;
     state.progress.finalResult = {
-      answers: score >= Number(previous.score || 0) ? answers : previous.answers,
       score: bestScore,
       passed: Boolean(previous.passed || score >= PASSING_SCORE),
       date: new Date().toISOString()
     };
     scheduleCloudSync();
     renderProfile();
+    renderReviewChallenge();
     openFinalEvaluation();
-    showToast(score >= PASSING_SCORE ? "¡Evaluación final aprobada! Tu certificado está disponible." : "Aún no alcanzas el 80%. Puedes revisar el recorrido y volver a intentarlo.");
+    showToast(score >= PASSING_SCORE ? "¡Evaluación final aprobada! Tu certificado está disponible." : "Aún no alcanzas el 80%. Puedes revisar el recorrido y volver a intentarlo con otras preguntas.");
   }
 
   function closeFinalModal() {
     const modal = byId("finalModal");
+    modal?.classList.remove("is-open");
+    modal?.setAttribute("aria-hidden", "true");
+    restoreBodyScroll();
+  }
+
+  function renderReviewChallenge() {
+    const section = byId("reviewChallenge");
+    const button = byId("reviewButton");
+    const text = byId("reviewSummaryText");
+    if (!section || !button || !text) return;
+    const pending = getReviewQuestions();
+    if (!pending.length) {
+      text.textContent = "Por ahora no tienes preguntas pendientes. Cada vez que falles una pregunta de una unidad o de la evaluación final, aparecerá aquí para que la repases hasta dominarla.";
+      button.hidden = true;
+    } else {
+      text.textContent = `Tienes ${pending.length} pregunta${pending.length === 1 ? "" : "s"} por reforzar, de las unidades que ya intentaste. Repásalas hasta acertarlas.`;
+      button.hidden = false;
+    }
+  }
+
+  function openReviewQuiz() {
+    const pending = pickReviewQuestions();
+    if (!pending.length) {
+      showToast("No tienes preguntas pendientes de repaso por ahora.");
+      return;
+    }
+    state.reviewQuizQuestions = pending;
+    state.reviewQuizAnswers = null;
+    renderReviewQuiz();
+    const modal = byId("reviewModal");
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function renderReviewQuiz() {
+    const questions = state.reviewQuizQuestions || [];
+    const savedAnswers = Array.isArray(state.reviewQuizAnswers) ? state.reviewQuizAnswers : [];
+    byId("reviewModalBody").innerHTML = `
+      <p>Estas son las ${questions.length} pregunta${questions.length === 1 ? "" : "s"} que más te ha${questions.length === 1 ? "" : "n"} costado hasta ahora. Acierta cada una para que salga de tu lista de repaso.</p>
+      <form id="reviewQuizForm" class="final-quiz-grid">
+        ${questions.map((question, qIndex) => `
+          <article class="quiz-question">
+            <p class="eyebrow">Unidad ${question.unitId}</p>
+            <h3>${escapeHTML(question.q)}</h3>
+            <div class="quiz-options">
+              ${question.options.map((option, optionIndex) => `
+                <label class="quiz-option"><input type="radio" name="review-${qIndex}" value="${optionIndex}" ${Number(savedAnswers[qIndex]) === optionIndex ? "checked" : ""}><span>${escapeHTML(option)}</span></label>`).join("")}
+            </div>
+          </article>`).join("")}
+        <button class="button button-primary" type="submit">Calificar repaso</button>
+      </form>`;
+    byId("reviewQuizForm").addEventListener("submit", (event) => gradeReviewQuiz(event, questions));
+  }
+
+  function gradeReviewQuiz(event, questions) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const answers = questions.map((_, index) => {
+      const value = form.get(`review-${index}`);
+      return value === null ? null : Number(value);
+    });
+    if (answers.some((answer) => answer === null)) {
+      showToast(`Responde las ${questions.length} preguntas antes de calificar.`);
+      return;
+    }
+    questions.forEach((question, index) => {
+      recordQuestionResult(question, answers[index] === question.correct);
+    });
+    state.reviewQuizAnswers = answers;
+    scheduleCloudSync();
+    const correct = questions.filter((question, index) => answers[index] === question.correct).length;
+    const stillPending = getReviewQuestions().length;
+    byId("reviewModalBody").insertAdjacentHTML("beforeend", `
+      <div class="evaluation-result ${stillPending ? "is-fail" : "is-pass"}">
+        <h3>${correct}/${questions.length}</h3>
+        <p>${stillPending
+          ? `Aún te quedan ${stillPending} pregunta${stillPending === 1 ? "" : "s"} por dominar. Puedes repasar de nuevo cuando quieras.`
+          : "¡Dominaste todas las preguntas que tenías pendientes!"}</p>
+      </div>`);
+    byId("reviewQuizForm").querySelector("button[type=submit]").disabled = true;
+    renderReviewChallenge();
+    renderHome();
+    showToast(stillPending ? "Repaso calificado. Sigue practicando lo que falta." : "¡Repaso completo! No te quedan preguntas pendientes.");
+  }
+
+  function closeReviewModal() {
+    const modal = byId("reviewModal");
     modal?.classList.remove("is-open");
     modal?.setAttribute("aria-hidden", "true");
     restoreBodyScroll();
@@ -2306,6 +2473,10 @@
     let hash = 0;
     for (let i = 0; i < seed.length; i += 1) hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
     return `IME2-${hash.toString(16).toUpperCase().padStart(8, "0").slice(0, 8)}`;
+  }
+
+  function pdfHrefForUnit(unit) {
+    return /Parte 1/i.test(unit?.source || "") ? "assets/libro-parte1.pdf" : "assets/libro-parte2.pdf";
   }
 
   function hideLinkIfFileMissing(id) {
@@ -2551,12 +2722,14 @@
     byId("profilePhotoInput").addEventListener("change", handleProfilePhoto);
     byId("backToRoute").addEventListener("click", () => switchView("homeView"));
     byId("continueButton").addEventListener("click", () => openUnit(getHighestUnlocked()));
-    byId("finalEvaluationButton").addEventListener("click", openFinalEvaluation);
+    byId("finalEvaluationButton").addEventListener("click", startFinalEvaluation);
     document.querySelectorAll("[data-close-modal]").forEach((button) => button.addEventListener("click", closeTheoryModal));
     document.querySelectorAll("[data-close-resource]").forEach((button) => button.addEventListener("click", closeResourceModal));
     document.querySelectorAll("[data-close-quiz]").forEach((button) => button.addEventListener("click", closeQuizModal));
     document.querySelectorAll("[data-close-badge]").forEach((button) => button.addEventListener("click", closeBadgeModal));
     document.querySelectorAll("[data-close-final]").forEach((button) => button.addEventListener("click", closeFinalModal));
+    byId("reviewButton")?.addEventListener("click", openReviewQuiz);
+    document.querySelectorAll("[data-close-review]").forEach((button) => button.addEventListener("click", closeReviewModal));
     byId("supportToggle").addEventListener("click", () => toggleSupport());
     byId("closeSupport").addEventListener("click", () => toggleSupport(false));
     byId("speakSupportAnswer").addEventListener("click", speakSupportAnswer);
